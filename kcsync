@@ -36,6 +36,7 @@ while getopts ":ci" o; do
 done
 
 if [ ! -s $(dirname ${0})/${child_id}/id.db ]; then
+  mkdir $(dirname ${0})/${child_id}
 	> $(dirname ${0})/${child_id}/id.db
 fi
 
@@ -44,6 +45,7 @@ done=0
 k=1
 
 until [ $done == "1" ]; do
+  mkdir /tmp/_${child_id}
 	wget -q --load-cookies $(dirname ${0})/cookies.txt "https://classroom.kindercare.com/accounts/${child_id}/journal_api?page=${k}" -O /tmp/_${child_id}/_act
 
 	jq '.intervals[] | .[].activity' /tmp/_${child_id}/_act > /tmp/_${child_id}/_jsontemp 
@@ -106,7 +108,7 @@ until [ $done == "1" ]; do
 
 		if [ "$no_insert_db" == "0" ]; then
 			cat /tmp/_${child_id}/_delta >> $(dirname ${0})/${child_id}/id.db
-			sort -u $(dirname ${0})/${child_id}/id.db > /tmp/id.db_sorted
+			sort -u $(dirname ${0})/${child_id}/id.db > /tmp/${child_id}/id.db_sorted
 			mv /tmp/id.db_sorted $(dirname ${0})/${child_id}/id.db
 		fi
 		rm -rf /tmp/_${child_id}/_act /tmp/_${child_id}/_id /tmp/_${child_id}/_title /tmp/_${child_id}/_desc /tmp/_${child_id}/_date /tmp/_${child_id}/_img /tmp/_${child_id}/_delta /tmp/_${child_id}/_jsontemp *.jpg_original
