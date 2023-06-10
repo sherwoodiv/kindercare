@@ -9,7 +9,7 @@ caption=0
 
 
 usage() {
-        echo "Usage: $0 [ -c ] " 1>&2
+        echo "Usage: $0 [ -cik xxxxxx ] " 1>&2
 }
 
 exit_abnormal() {
@@ -17,7 +17,7 @@ exit_abnormal() {
         exit 1
 }
 
-while getopts ":cin" o; do
+while getopts "cik:" o; do
 	case "${o}" in
 		c)
 			caption=1
@@ -25,8 +25,9 @@ while getopts ":cin" o; do
 		i)
 			no_insert_db=1
 			;;
-	  n)
-	    child_id=${OPTARG};;
+		k)
+			child_id=${OPTARG}
+			;;
 		:)
 			echo "Error: -${OPTARG} requires an argument."
 			exit_abnormal
