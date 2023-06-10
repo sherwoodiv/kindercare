@@ -90,10 +90,10 @@ until [ $done == "1" ]; do
 							mv -f result.jpg ${child_id}/${date}.jpg
 						fi
 					else
-						wget -q $img -O ${child_id}/${$date}.mov
+						wget -q $img -O ${child_id}/${date}.mov
 						echo "converting video"
-						ffmpeg -loglevel panic -i ${child_id}/${$date}.mov -metadata title="$title $desc" ${child_id}/${$date}.mp4
-						rm ${child_id}/${$date}.mov
+						ffmpeg -loglevel panic -i ${child_id}/${date}.mov -metadata title="$title $desc" ${child_id}/${date}.mp4
+						rm ${child_id}/${date}.mov
 					fi
 				else
 					done=1
