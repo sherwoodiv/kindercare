@@ -17,7 +17,7 @@ exit_abnormal() {
         exit 1
 }
 
-while getopts ":ci" o; do
+while getopts ":cin" o; do
 	case "${o}" in
 		c)
 			caption=1
@@ -25,6 +25,8 @@ while getopts ":ci" o; do
 		i)
 			no_insert_db=1
 			;;
+	  n)
+	    child_id=${OPTARG};;
 		:)
 			echo "Error: -${OPTARG} requires an argument."
 			exit_abnormal
@@ -38,7 +40,7 @@ done
 if [ ! -s $(dirname ${0})/${child_id}/id.db ]; then
   mkdir $(dirname ${0})/${child_id}
   mkdir /tmp/_${child_id}
-	touch $(dirname ${0})/${child_id}/id.db
+  touch $(dirname ${0})/${child_id}/id.db
 fi
 
 
